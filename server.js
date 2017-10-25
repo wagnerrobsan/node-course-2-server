@@ -36,10 +36,38 @@ hbs.registerHelper('screamIt', (text) => {
   return text.toUpperCase();
 });
 
+hbs.registerHelper('screamJson', (json) => {
+  var jsonData = '';
+  for (var key in json){
+    jsonData += `<h3>${json[key].name} </h3>\n`;
+    jsonData += `<p><b>Period:</b> ${json[key].period} </p> \n`;
+    jsonData += `<p><b>Description:</b> ${json[key].description} </p><br>`;
+  }
+  return new hbs.handlebars.SafeString(jsonData);
+});
+
+
 app.get('/', (req, res) => {
   res.render('home.hbs',{
     pageTitle: 'Home Page',
     welcomeMessage: 'Welcome to Wagner\'s Website! NodeJS rocks!!!'
+  });
+});
+
+app.get('/projects', (req, res) => {
+  res.render('projects.hbs',{
+    pageTitle: 'Portfolio Page',
+    project:
+      [
+        {
+        name: 'New Aerlingus website',
+        period: 'Apr 2014 to Aug 2015',
+        description: 'Project to completely redesign the Aerlingus website for better usability, aesthetics, backend processes and integrations using new technologies .'
+         },
+        {name: 'Predictive IVR (IIVR)',
+         period: 'May 2010 – Dec 2010',
+         description: 'Project deployment of IP Predictive IVR (Huawei) at TIM Brazil with 9,000 doors, for service to postpaid customers. <br> This new Predictive IVR enabled the development and activation of a new portfolio of services'}
+      ]
   });
 });
 
